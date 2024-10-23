@@ -1,7 +1,8 @@
-import { GameplayScene } from './scenes/Game';
-import { StartScene } from './scenes/Start';
-import './style.css'
 import Phaser from "phaser"
+import './style.css'
+//make sure imports are imported after their dependencies!
+import StartScene from './scenes/Start';
+import GameplayScene from './scenes/Game';
 
 const CONFIG = {
   type: Phaser.CANVAS,
@@ -9,7 +10,7 @@ const CONFIG = {
   scale: {
     autoCenter: Phaser.Scale.CENTER_BOTH,
     size: Phaser.Scale.FIT,
-    zoom: 0.75
+    zoom: 1
   },
   pixelArt: false,
   physics: {
@@ -18,7 +19,7 @@ const CONFIG = {
     }
   },
   zoom: 1,
-  scene: [StartScene, GameplayScene]
+  scene: [GameplayScene, StartScene]
 }
 
 export default CONFIG;

@@ -5,22 +5,32 @@
 
 import { UIManager } from "../prefabs/UIManager";
 
-export class GameplayScene extends Phaser.Scene {
-    interfaceManager:UIManager
-    constructor(name: string) {
-        super({ key: name });
-        this.interfaceManager = new UIManager(this.scene.scene);
+ export default class GameplayScene extends Phaser.Scene {
+    UI: UIManager
+    constructor() {
+        super({ key: "game" });
+
+        this.UI = new UIManager(this);
     }
-    init(){
-        
-    }
-    preload(){
+    /**
+     * @init use this function to initialize any important things before preload() and create().
+     */
+    init() {
 
     }
-    create(){
+    /**
+     * @preload use this function to load assets into the scene.
+     */
+    preload() {
 
+    }
+    /**
+     * @create use this function to create gameObjects inside the scene.
+     */
+    create(_data:any) {
+        this.UI.createElements();
     }
     update(_time: number, _delta: number): void {
-        
+
     }
 }
