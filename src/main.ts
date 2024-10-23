@@ -1,3 +1,4 @@
+import { GameplayScene } from './scenes/Game';
 import { StartScene } from './scenes/Start';
 import './style.css'
 import Phaser from "phaser"
@@ -17,7 +18,7 @@ const CONFIG = {
     }
   },
   zoom: 1,
-  scene: [StartScene]
+  scene: [StartScene, GameplayScene]
 }
 
 export default CONFIG;
