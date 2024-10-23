@@ -1,3 +1,4 @@
+import { StartScene } from './scenes/Start';
 import './style.css'
 import Phaser from "phaser"
 
@@ -9,16 +10,16 @@ const CONFIG = {
     size: Phaser.Scale.FIT,
     zoom: 0.75
   },
-  pixelArt: true,
+  pixelArt: false,
   physics: {
     default: 'arcade',
     arcade: {
     }
   },
   zoom: 1,
-  scene: [/*StartScene, GameplayScene*/]
+  scene: [StartScene]
 }
 
 export default CONFIG;
 
-const GAME = new Phaser.Game(CONFIG)
+/*const GAME = */new Phaser.Game(CONFIG)
