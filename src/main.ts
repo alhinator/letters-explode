@@ -1,4 +1,5 @@
 import Phaser from "phaser"
+import BBCodeTextPlugin from "phaser3-rex-plugins/plugins/bbcodetext";
 import './style.css'
 //make sure imports are imported after their dependencies!
 import StartScene from './scenes/Start';
@@ -18,10 +19,19 @@ const CONFIG = {
     arcade: {
     }
   },
+  plugins: {
+    global: [{
+      key: 'rexBBCodeTextPlugin',
+      plugin: BBCodeTextPlugin,
+      start: true
+    },
+      // ...
+    ]
+  },
   zoom: 1,
   scene: [GameplayScene, StartScene]
 }
 
 export default CONFIG;
 
-/*const GAME = */new Phaser.Game(CONFIG)
+const GAME = new Phaser.Game(CONFIG)

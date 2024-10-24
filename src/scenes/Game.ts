@@ -7,10 +7,13 @@ import { UIManager } from "../prefabs/UIManager";
 
  export default class GameplayScene extends Phaser.Scene {
     UI: UIManager
+    eventTracker:EventTarget;
     constructor() {
         super({ key: "game" });
 
-        this.UI = new UIManager(this);
+        this.eventTracker = new EventTarget();
+        
+        this.UI = new UIManager(this, this.eventTracker);
     }
     /**
      * @init use this function to initialize any important things before preload() and create().
