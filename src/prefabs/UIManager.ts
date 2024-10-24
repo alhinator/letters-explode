@@ -21,9 +21,28 @@ export const PARA_STYLE = {
     strokeThickness: 0,
 }
 
+export type Letter = 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h' | 'i' | 'j' | 'k' | 'l' | 'm' | 'n' | 'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u' | 'v' | 'w' | 'x' | 'y' | 'z' | "" | "nothing yet"
+
 interface colorWordPair {
     color: HexColorString,
     word: string
+}
+class MarkedLetter {
+    letter: Letter
+    timeRemaining: number
+    maxTime: number
+    markedText: BBCodeText
+    timerBar: Phaser.GameObjects.Rectangle
+    constructor(_scene: Phaser.Scene, _letter: Letter, _maxTime: number,) {
+
+        this.letter = _letter;
+        this.markedText = new BBCodeText(_scene);
+        _scene.add.existing(this.markedText);
+        this.maxTime = _maxTime;
+        this.timeRemaining = _maxTime;
+        this.timerBar = _scene.add.rectangle();
+
+    }
 }
 
 /**
@@ -38,24 +57,27 @@ export class UIManager {
     private eventSystem: EventTarget;
 
     //private paragraphObject:ParagraphObject
-    private pairs:colorWordPair[];
+    private pairs: colorWordPair[];
+    private marks: MarkedLetter[];
 
-    constructor(_scene: Phaser.Scene, _el: EventTarget /* _p:ParagraphObject*/) {
+
+    constructor(_scene: Phaser.Scene, _el: EventTarget /*, _p:ParagraphObject, _m:GameManager*/) {
         console.log("in UIManager constructor")
         this.scene = _scene;
         this.sceneWidth = 0
         this.sceneHeight = 0
 
-        //TODO: implement mechanic manager -> subscribe to its "word-changed" listener
         this.eventSystem = _el;
         this.eventSystem.addEventListener("word-changed", this.updateCurrentWord);
 
         //TODO: implement colorwordpair: grab each word from paragraph and assign it an index and the default untyped color.
         /*this.paragraphObject = _p
         */
-       //this.pairs = [this.paragraphObject.numWords];
+        //this.pairs = [this.paragraphObject.numWords];
         //TEMP CODE BELOW
         this.pairs = [];
+
+        this.marks = [];
 
 
     }
@@ -70,6 +92,7 @@ export class UIManager {
 
         this.paragraphText = new BBCodeText(this.scene, 50, this.sceneHeight / 2 + 50, "", PARA_STYLE)
         this.initializeParagraphText();
+        this.initializeMarkedBoxes();
         this.scene.add.existing(this.paragraphText);
         this.paragraphText.width = this.sceneWidth - 100;
         this.paragraphText.height = this.sceneHeight / 2 - 100;
@@ -82,16 +105,28 @@ export class UIManager {
         this.currentWordText.text = tmpWord;
     }
 
-    private initializeParagraphText(){
-        if (!this.paragraphText){throw("UIManager: initializeParagraphText: paragraphText has not been created yet."); return}
+    private initializeParagraphText() {
+        if (!this.paragraphText) { throw ("UIManager: initializeParagraphText: paragraphText has not been created yet."); return }
         // this.paragraphObject.words.foreach((_daWord)=>{
         //     pairs.append(new colorWordPair(color:#FFFFFF, word:_daWord))
         // })
-        let tmpString:string = "";
-        this.pairs.forEach((pair)=>{
-            tmpString +=("[color=" + pair.color + "]" + pair.word + " ")
+        let tmpString: string = "";
+        this.pairs.forEach((pair) => {
+            tmpString += ("[color=" + pair.color + "]" + pair.word + " ")
         });
         this.paragraphText.text = tmpString;
+    }
+    private initializeMarkedBoxes() {
+        for (let i = 0; i < 3; i++) {
+
+
+            //let tmp = new MarkedLetter()
+            this.marks.push();
+            this.scene.add.existing(this.marks[i].markedText);
+
+
+        }
+
     }
 
 }
