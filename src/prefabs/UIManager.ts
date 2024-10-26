@@ -43,6 +43,7 @@ export class UIManager {
     //private paragraphObject:ParagraphObject
     private pairs: colorWordPair[];
     private marks: MarkedLetter[];
+    timeTillExplode: number;
 
 
     constructor(_scene: Phaser.Scene, _el: EventTarget /*, _p:ParagraphObject, _m:GameManager*/) {
@@ -62,6 +63,10 @@ export class UIManager {
         this.pairs = [];
 
         this.marks = [];
+
+        //TODO: GAME MANAGER TIME TILL EXPLODE
+        //this.timeTillExplode = this.gameManager.timeTillExplode;
+        this.timeTillExplode = 15;
 
 
     }
@@ -102,14 +107,18 @@ export class UIManager {
     }
     private initializeMarkedBoxes() {
         for (let i = 0; i < 3; i++) {
-
-
-            let tmp = new MarkedLetter(this.scene, "nothing yet", -1, this.sceneWidth/2 - 300 + i*250, this.sceneHeight/2 - 300);
+            let tmp = new MarkedLetter(this.scene, "nothing yet", this.timeTillExplode, this.sceneWidth/2 - 300 + i*250, this.sceneHeight/2 - 300);
             this.marks.push(tmp);
-
-
         }
 
+    }
+
+
+    public tick(_delta:number){
+        this.marks.forEach((e)=>{e.tick(_delta)})
+    }
+    public defuse(which: 0 | 1 | 2){
+        this.marks[which].defuse();
     }
 
 }

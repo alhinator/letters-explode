@@ -33,6 +33,6 @@ export default class GameplayScene extends Phaser.Scene {
         this.UI.createElements();
     }
     update(_time: number, _delta: number): void {
-
+        this.UI.tick(_delta / 1000);
     }
 }
