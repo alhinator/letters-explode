@@ -1,5 +1,5 @@
 import Phaser from "phaser"
-import BBCodeTextPlugin from "phaser3-rex-plugins/plugins/bbcodetext";
+import BBCodeTextPlugin from 'phaser3-rex-plugins/plugins/bbcodetext-plugin.js';
 import './style.css'
 //make sure imports are imported after their dependencies!
 import StartScene from './scenes/Start';

@@ -1,5 +1,5 @@
-import { HexColorString } from 'discord.js-selfbot-v13';
 import BBCodeText from 'phaser3-rex-plugins/plugins/bbcodetext.js';
+import { MarkedLetter } from './MarkedLetter';
 
 export const CURR_WORD_STYLE = {
     fontFamily: 'Avenir',
@@ -24,26 +24,10 @@ export const PARA_STYLE = {
 export type Letter = 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h' | 'i' | 'j' | 'k' | 'l' | 'm' | 'n' | 'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u' | 'v' | 'w' | 'x' | 'y' | 'z' | "" | "nothing yet"
 
 interface colorWordPair {
-    color: HexColorString,
+    color: string,
     word: string
 }
-class MarkedLetter {
-    letter: Letter
-    timeRemaining: number
-    maxTime: number
-    markedText: BBCodeText
-    timerBar: Phaser.GameObjects.Rectangle
-    constructor(_scene: Phaser.Scene, _letter: Letter, _maxTime: number,) {
 
-        this.letter = _letter;
-        this.markedText = new BBCodeText(_scene);
-        _scene.add.existing(this.markedText);
-        this.maxTime = _maxTime;
-        this.timeRemaining = _maxTime;
-        this.timerBar = _scene.add.rectangle();
-
-    }
-}
 
 /**
 @class UIManager a class for managing the UI elements of the game during the gameplay scene.
@@ -90,10 +74,9 @@ export class UIManager {
 
         this.currentWordText = this.scene.add.text(this.sceneWidth / 2 - 100, this.sceneHeight / 2 - 50, "Start Typing!", CURR_WORD_STYLE)
 
-        this.paragraphText = new BBCodeText(this.scene, 50, this.sceneHeight / 2 + 50, "", PARA_STYLE)
+        this.paragraphText = new BBCodeText(this.scene, 50, this.sceneHeight / 2 + 50, "lorem ipsum dolor set amet", PARA_STYLE)
         this.initializeParagraphText();
         this.initializeMarkedBoxes();
-        this.scene.add.existing(this.paragraphText);
         this.paragraphText.width = this.sceneWidth - 100;
         this.paragraphText.height = this.sceneHeight / 2 - 100;
 
@@ -107,6 +90,7 @@ export class UIManager {
 
     private initializeParagraphText() {
         if (!this.paragraphText) { throw ("UIManager: initializeParagraphText: paragraphText has not been created yet."); return }
+        //TODO : Paragraph object reciept & formatting
         // this.paragraphObject.words.foreach((_daWord)=>{
         //     pairs.append(new colorWordPair(color:#FFFFFF, word:_daWord))
         // })
@@ -120,9 +104,8 @@ export class UIManager {
         for (let i = 0; i < 3; i++) {
 
 
-            //let tmp = new MarkedLetter()
-            this.marks.push();
-            this.scene.add.existing(this.marks[i].markedText);
+            let tmp = new MarkedLetter(this.scene, "nothing yet", -1, this.sceneWidth/2 - 300 + i*250, this.sceneHeight/2 - 300);
+            this.marks.push(tmp);
 
 
         }
