@@ -9,7 +9,6 @@ export const MARKED_STYLE = {
     color: "#FFFFFF",
     stroke: "#FFFFFF",
     strokeThickness: 0,
-    justify: "center"
 }
 
 export class MarkedLetter {
@@ -22,13 +21,13 @@ export class MarkedLetter {
     constructor(_scene: Phaser.Scene, _letter: Letter, _maxTime: number, xpos: number, ypos: number) {
 
         this.letter = _letter;
-        this.markedText = _scene.add.rexBBCodeText(xpos, ypos, "", MARKED_STYLE);
-        this.markedText.text = "[color=white]" + this.letter + "[/color]";
+        this.markedText = _scene.add.rexBBCodeText(xpos - 12, ypos, "", MARKED_STYLE);
+        this.markedText.text = "[color=white][align=center]" + this.letter + "[/color][/align]";
 
         this.maxTime = _maxTime;
         this.timeRemaining = _maxTime;
-        this.timerBar = _scene.add.rectangle(xpos + 50, ypos + 50, 100, 20, 0xffffff, 1);
-        this.defused = false;
+        this.timerBar = _scene.add.rectangle(xpos - 50, ypos + 50, 0, 20, 0xffffff, 1);
+        this.defused = true;
     }
 
     public resetEverything(_letter: Letter,) {
@@ -46,10 +45,16 @@ export class MarkedLetter {
         this.timerBar.width < 0 ? this.timerBar.width = 0 : true;
         if (this.timeRemaining < this.maxTime / 2) {
             this.markedText.text = "[color=red]" + this.letter + "[/color]";
+        } if (this.timeRemaining <= 0){
+            this.visuallyExplode()
         }
     }
 
     public defuse(){
         this.defused = true;
+    }
+
+    private visuallyExplode(){
+
     }
 }

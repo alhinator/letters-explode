@@ -107,7 +107,7 @@ export class UIManager {
     }
     private initializeMarkedBoxes() {
         for (let i = 0; i < 3; i++) {
-            let tmp = new MarkedLetter(this.scene, "nothing yet", this.timeTillExplode, this.sceneWidth/2 - 300 + i*250, this.sceneHeight/2 - 300);
+            let tmp = new MarkedLetter(this.scene, "nothing yet", this.timeTillExplode, this.sceneWidth/2 - 300 + i*300, this.sceneHeight/2 - 300);
             this.marks.push(tmp);
         }
 
@@ -117,8 +117,11 @@ export class UIManager {
     public tick(_delta:number){
         this.marks.forEach((e)=>{e.tick(_delta)})
     }
-    public defuse(which: 0 | 1 | 2){
-        this.marks[which].defuse();
+    public defuse(_position: 0 | 1 | 2){
+        this.marks[_position].defuse();
+    }
+    public markALetter(_position: 0|1|2, _letter:Letter){
+        this.marks[_position].resetEverything(_letter);
     }
 
 }
