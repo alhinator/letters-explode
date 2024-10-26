@@ -31,9 +31,7 @@ export default class GameplayScene extends Phaser.Scene {
      */
     create(_data: any) {
         this.UI.createElements();
-        this.UI.markALetter(0, "a");
-        this.UI.markALetter(1, "b");
-        this.UI.markALetter(2, "c");
+        
     }
     update(_time: number, _delta: number): void {
         this.UI.tick(_delta / 1000);
