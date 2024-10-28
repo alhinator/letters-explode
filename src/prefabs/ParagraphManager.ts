@@ -12,7 +12,7 @@ class Paragraph {
         this.words = [];
 
         let wordList = paragraph.split(" ");
-        wordList.forEach(function (word: string) {
+        wordList.forEach((word: string) => {
             let newWordCheck: WordCheck = { word: word, isCompleted: false };
             this.words.push(newWordCheck);
         });
