@@ -1,4 +1,13 @@
-// import { Letter } from "./UIManager";
+import { Letter } from "./UIManager";
+const letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i",
+    "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
+    "t", "u", "v", "w", "x", "y", "z"
+];
+
+function isLetter(char: string): char is Letter {
+    char = char.toLowerCase();
+    return letters.indexOf(char) !== -1;
+}
 
 interface WordCheck {
     word: string,
@@ -27,7 +36,18 @@ class Paragraph {
 
         this.length = this.words.length;
 
+        // sets all letter appearances to 0
         this.letterCount = {};
+        for (const letter of letters) {
+            this.letterCount[letter] = 0;
+        }
+
+        for (const char of this.paragraph) {
+            let c = char.toLowerCase();
+            if (isLetter(c)) {
+                this.letterCount[c] += 1;
+            }
+        }
     }
 }
 
