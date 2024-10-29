@@ -1,5 +1,4 @@
 import {ParagraphManager} from './ParagraphManager';
-import {WordCheck} from './ParagraphManager';
 import { MarkedLetter } from './MarkedLetter';
 import {UIManager} from './UIManager';
 import { Letter } from "./UIManager";
@@ -8,9 +7,12 @@ import { Letter } from "./UIManager";
 @class Mechanics for handling user input interacting with marked letters and UI
  **/
 export class Mechanics {
-    private userInput: string;
+    private userInput: HTMLInputElement;
+    private userWord: string
+
     constructor(keyboard: HTMLInputElement){
         this.userInput = keyboard;
+        this.userWord = keyboard.value;
     }
 
     public setLockedLetter(key: Letter, status: boolean){
@@ -32,11 +34,13 @@ export class Mechanics {
             }
         }
     }
-    public wordChecker(textParagraph : Paragraph){
-        textParagraph.words.forEach((element) => {
-            if (this.userInput == element.word)
-                element.isCompleted = true;
-        });
+    public wordChecker(textParagraph : ParagraphManager){
+        for(let items of textParagraph.paragraphs){
+            items.words.forEach((element) => {
+                if (this.userWord == element.word)
+                    element.isCompleted = true;
+            });
+        }
     }
 
 }
