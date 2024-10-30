@@ -8,17 +8,25 @@ import { UserInput } from './UserInput';
  **/
 const markInterval: number = 15;
 
+export interface mark {
+    pos: 0|1|2,
+    letter:Letter
+    timeRemaining:number;
+}
+
 export class Mechanics {
     paraManager: ParagraphManager
     UIManager: UIManager
     InputManager: UserInput
     lastMark: number = 0;
+    marks:mark[]
 
 
     constructor(_pm: ParagraphManager, _ui: UIManager, _in: UserInput) {
         this.paraManager = _pm;
         this.UIManager = _ui;
         this.InputManager = _in;
+        this.marks = []
     }
 
 
@@ -40,9 +48,9 @@ export class Mechanics {
         }
     }
     public submitWord(_word: string) {
-        console.log("in Mechanic subword");
+        //console.log("in Mechanic subword");
         _word = _word.replace(/[^a-zA-Z]/g, '');
-        console.log(_word)
+        //console.log(_word)
         for (let item of this.paraManager.paragraph) {
             if (_word.toLowerCase() === item.word.toLowerCase() && !item.isCompleted) {
                 item.isCompleted = true;
