@@ -6,8 +6,8 @@ import { Letter } from "./UIManager";
  **/
 
 export class Mechanics {
-    public userInput: HTMLInputElement;
-    public userWord: string
+    private userInput: HTMLInputElement;
+    private userWord: string
 
     constructor(keyboard: HTMLInputElement){
         this.userInput = keyboard;
