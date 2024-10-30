@@ -47,6 +47,6 @@ export default class GameplayScene extends Phaser.Scene {
         
     }
     update(_time: number, _delta: number): void {
-        this.UI.tick(_delta / 1000);
+        this.Mech.tick(_time, _delta/1000);
     }
 }

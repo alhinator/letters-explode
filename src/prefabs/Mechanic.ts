@@ -6,11 +6,14 @@ import { UserInput } from './UserInput';
 /**
 @class Mechanics for managing game state, timers, and marked letters
  **/
+const markInterval:number = 15;
 
 export class Mechanics {
     paraManager:ParagraphManager
     UIManager:UIManager
     InputManager:UserInput
+    lastMark:number = 0;
+    
 
     constructor(_pm:ParagraphManager, _ui:UIManager, _in:UserInput){
         this.paraManager = _pm;
@@ -46,11 +49,17 @@ export class Mechanics {
         score += points;
     }
 
-    public tick(){ //does game loop 
+    public tick(time:number, _delta:number){ //does game loop 
+        this.UIManager.tick(_delta);
+        if (time > this.lastMark){
+            this.lastMark += markInterval;
+            //this.markForExplosion(/*random letter*/)
+        }
+
 
     }
     private markForExplosion(key:Letter){
-        
+
     }
 
 }
