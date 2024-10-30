@@ -15,12 +15,12 @@ export const CURR_WORD_STYLE = {
 }
 export const PARA_STYLE = {
     fontFamily: 'Avenir',
-    fontSize: '14px',
+    fontSize: '16px',
     fontWeight: 150,
     fontStyle: "normal",
     color: "#FFFFFF",
     stroke: "#FFFFFF",
-    strokeThickness: 0,
+    strokeThickness: 1,
 }
 
 export type Letter = 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h' | 'i' | 'j' | 'k' | 'l' | 'm' | 'n' | 'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u' | 'v' | 'w' | 'x' | 'y' | 'z' | "" | "nothing yet"
@@ -50,7 +50,7 @@ export class UIManager {
 
 
     constructor(_scene: Phaser.Scene, _el: EventTarget , _p:ParagraphManager) {
-        console.log("in UIManager constructor")
+        //console.log("in UIManager constructor")
         this.scene = _scene;
         this.sceneWidth = 0
         this.sceneHeight = 0
@@ -79,7 +79,13 @@ export class UIManager {
 
         this.currentWordText = this.scene.add.text(this.sceneWidth / 2 - 100, this.sceneHeight / 2 - 50, "Start Typing!", CURR_WORD_STYLE)
 
-        this.paragraphText = new BBCodeText(this.scene, 50, this.sceneHeight / 2 + 50, "lorem ipsum dolor set amet", PARA_STYLE)
+        this.paragraphText = new BBCodeText(this.scene, 50, this.sceneHeight/2 + 50, "lorem ipsum dolor set amet", PARA_STYLE)
+        this.paragraphText.width = this.sceneWidth - 100;
+        this.paragraphText.setWordWrapWidth( this.sceneWidth - 100);
+        this.paragraphText.height = (this.sceneHeight / 2 ) - 100;
+
+        this.paragraphText.setWrapMode(3);
+        this.scene.add.existing(this.paragraphText);
         this.initializeParagraphText();
         this.initializeMarkedBoxes();
         this.paragraphText.width = this.sceneWidth - 100;
@@ -99,11 +105,15 @@ export class UIManager {
         this.para.forEach((_daWord)=>{
             this.pairs.push({color:"#FFFFFF", word:_daWord.word})
         })
+        //console.log(this.pairs)
         let tmpString: string = "";
         this.pairs.forEach((pair) => {
-            tmpString += ("[color=" + pair.color + "]" + pair.word + " ")
+            tmpString += "[color=" + pair.color + "]" + pair.word + "[/color] ";
+            //tmpString += pair.word;
         });
         this.paragraphText.text = tmpString;
+        //console.log(this.paragraphText.active)
+
     }
     private initializeMarkedBoxes() {
         for (let i = 0; i < 3; i++) {
