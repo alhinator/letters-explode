@@ -42,14 +42,14 @@ export class UIManager {
     private paragraphText: BBCodeText | undefined;
     private eventSystem: EventTarget;
 
-    private paraManager:ParagraphManager;
+    private paraManager: ParagraphManager;
     private para
     private pairs: colorWordPair[];
     private marks: MarkedLetter[];
     timeTillExplode: number;
 
 
-    constructor(_scene: Phaser.Scene, _el: EventTarget , _p:ParagraphManager) {
+    constructor(_scene: Phaser.Scene, _el: EventTarget, _p: ParagraphManager) {
         //console.log("in UIManager constructor")
         this.scene = _scene;
         this.sceneWidth = 0
@@ -79,10 +79,10 @@ export class UIManager {
 
         this.currentWordText = this.scene.add.text(this.sceneWidth / 2 - 100, this.sceneHeight / 2 - 50, "Start Typing!", CURR_WORD_STYLE)
 
-        this.paragraphText = new BBCodeText(this.scene, 50, this.sceneHeight/2 + 50, "lorem ipsum dolor set amet", PARA_STYLE)
+        this.paragraphText = new BBCodeText(this.scene, 50, this.sceneHeight / 2 + 50, "lorem ipsum dolor set amet", PARA_STYLE)
         this.paragraphText.width = this.sceneWidth - 100;
-        this.paragraphText.setWordWrapWidth( this.sceneWidth - 100);
-        this.paragraphText.height = (this.sceneHeight / 2 ) - 100;
+        this.paragraphText.setWordWrapWidth(this.sceneWidth - 100);
+        this.paragraphText.height = (this.sceneHeight / 2) - 100;
 
         this.paragraphText.setWrapMode(3);
         this.scene.add.existing(this.paragraphText);
@@ -98,13 +98,13 @@ export class UIManager {
         let tmpWord = "" // + gameManager.getCurrentWord()
         this.currentWordText.text = tmpWord;
     }
- 
-    public refreshParagraph(){ //called when a word is submitted
+
+    public refreshParagraph() { //called when a word is submitted
         if (!this.paragraphText) { throw ("UIManager: initializeParagraphText: paragraphText has not been created yet."); return }
         this.pairs = []
-        this.para.forEach((_daWord)=>{
+        this.para.forEach((_daWord) => {
             let _c = _daWord.isCompleted ? "#00FFFF" : "#FFFFFF"
-            this.pairs.push({color:_c, word:_daWord.word})
+            this.pairs.push({ color: _c, word: _daWord.word })
         })
         let tmpString: string = "";
         this.pairs.forEach((pair) => {
@@ -116,21 +116,24 @@ export class UIManager {
 
     private initializeMarkedBoxes() {
         for (let i = 0; i < 3; i++) {
-            let tmp = new MarkedLetter(this.scene, "nothing yet", this.timeTillExplode, this.sceneWidth/2 - 300 + i*300, this.sceneHeight/2 - 300);
+            let tmp = new MarkedLetter(this.scene, "nothing yet", this.timeTillExplode, this.sceneWidth / 2 - 300 + i * 300, this.sceneHeight / 2 - 300);
             this.marks.push(tmp);
         }
 
     }
 
 
-    public tick(_delta:number){
-        this.marks.forEach((e)=>{e.tick(_delta)})
+    public tick(_delta: number) {
+        this.marks.forEach((e) => { e.tick(_delta) })
     }
-    public defuse(_position: 0 | 1 | 2){
+    public defuse(_position: 0 | 1 | 2) {
         this.marks[_position].defuse();
     }
-    public markALetter(_position: 0|1|2, _letter:Letter){
+    public markALetter(_position: 0 | 1 | 2, _letter: Letter) {
         this.marks[_position].resetEverything(_letter);
+    }
+    public lockALetter(_position: 0 | 1 | 2) {
+        this.marks[_position].showLocked()
     }
 
 }

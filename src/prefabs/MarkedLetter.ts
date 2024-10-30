@@ -48,7 +48,7 @@ export class MarkedLetter {
         if (this.timeRemaining < this.maxTime / 2) {
             this.markedText.text = "[color=red]" + this.letter + "[/color]";
         } if (this.timeRemaining <= 0){
-            this.visuallyExplode()
+            this.showLocked()
         }
     }
 
@@ -56,7 +56,7 @@ export class MarkedLetter {
         this.defused = true;
     }
 
-    private visuallyExplode(){
-
+    public showLocked(){
+        this.markedText.text = "[color=white][align=center]" + this.letter + "[/color]\nExploded![/align]";
     }
 }
