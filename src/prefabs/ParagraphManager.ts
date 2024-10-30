@@ -76,6 +76,10 @@ export class ParagraphManager {
         return this._paragraph._words;
     }
 
+    public getNumberOfWords() {
+        return this._paragraph._words.length;
+    }
+
     public getLength() {
         return this._paragraph._length;
     }
