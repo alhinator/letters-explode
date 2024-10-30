@@ -53,14 +53,22 @@ class Paragraph {
 
 type ParagraphSize = "SHORT" | "MEDIUM" | "LONG";
 
+function isParagraphSize(word: string): word is ParagraphSize {
+    return ["SHORT", "MEDIUM", "LONG"].indexOf(word) !== -1;
+}
+
 /**
 @class ParagraphManager a class for handling the paragraphs and word contents to be used in the main prototype.
  **/
 export class ParagraphManager {
     paragraph: Paragraph;
 
-
-    constructor(which_one: ParagraphSize) {
-        this.paragraph = new Paragraph(""); // grabfromjson(which_one)
+    constructor(which_one: string) {
+        let paragraphList = JSON.parse("paragraphs.json");
+        if (isParagraphSize(which_one)) {
+            this.paragraph = new Paragraph(paragraphList[which_one]);
+        } else {
+            this.paragraph = new Paragraph("");
+        }
     }
 }
