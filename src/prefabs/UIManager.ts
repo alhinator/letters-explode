@@ -86,7 +86,7 @@ export class UIManager {
 
         this.paragraphText.setWrapMode(3);
         this.scene.add.existing(this.paragraphText);
-        this.initializeParagraphText();
+        this.refreshParagraph();
         this.initializeMarkedBoxes();
         this.paragraphText.width = this.sceneWidth - 100;
         this.paragraphText.height = this.sceneHeight / 2 - 100;
@@ -98,27 +98,20 @@ export class UIManager {
         let tmpWord = "" // + gameManager.getCurrentWord()
         this.currentWordText.text = tmpWord;
     }
-
-    private initializeParagraphText() {
+ 
+    public refreshParagraph(){ //called when a word is submitted
         if (!this.paragraphText) { throw ("UIManager: initializeParagraphText: paragraphText has not been created yet."); return }
-        console.log("in initializeParagraph")
+        this.pairs = []
         this.para.forEach((_daWord)=>{
-            this.pairs.push({color:"#FFFFFF", word:_daWord.word})
+            let _c = _daWord.isCompleted ? "#00FFFF" : "#FFFFFF"
+            this.pairs.push({color:_c, word:_daWord.word})
         })
-        //console.log(this.pairs)
         let tmpString: string = "";
         this.pairs.forEach((pair) => {
             tmpString += "[color=" + pair.color + "]" + pair.word + "[/color] ";
             //tmpString += pair.word;
         });
         this.paragraphText.text = tmpString;
-        //console.log(this.paragraphText.active)
-
-    }
- 
-    public refreshParagraph(){ //called when a word is submitted
-        //this.pairs = [];
-        
     }
 
     private initializeMarkedBoxes() {
