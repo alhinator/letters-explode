@@ -7,11 +7,12 @@ import { UserInput } from './UserInput';
 @class Mechanics for managing game state, timers, and marked letters
  **/
 const markInterval: number = 15;
+const maxGameTime: number = 100;
 
 export interface mark {
-    pos: 0|1|2,
-    letter:Letter
-    timeRemaining:number;
+    pos: 0 | 1 | 2,
+    letter: Letter
+    timeRemaining: number;
 }
 
 export class Mechanics {
@@ -19,7 +20,8 @@ export class Mechanics {
     UIManager: UIManager
     InputManager: UserInput
     lastMark: number = 0;
-    marks:mark[]
+    marks: mark[]
+    gameTimer:number;
 
 
     constructor(_pm: ParagraphManager, _ui: UIManager, _in: UserInput) {
@@ -27,6 +29,7 @@ export class Mechanics {
         this.UIManager = _ui;
         this.InputManager = _in;
         this.marks = []
+        this.gameTimer = maxGameTime;
     }
 
 
@@ -38,14 +41,8 @@ export class Mechanics {
             this.InputManager.unlockLetter(key)
         }
     }
-    public setTimer(timeStart: number) {
-        const timer = setInterval(countDown, 1000);
-        function countDown() {
-            timeStart -= 1;
-            if (timeStart == 0) {
-                clearInterval(timer);
-            }
-        }
+    public incTimer(_time: number) {
+        this.gameTimer -= _time;
     }
     public submitWord(_word: string) {
         //console.log("in Mechanic subword");
@@ -69,8 +66,7 @@ export class Mechanics {
             this.lastMark += markInterval;
             //this.markForExplosion(/*random letter*/)
         }
-
-
+        this.incTimer(_delta);
     }
     private markForExplosion(key: Letter) {
 
