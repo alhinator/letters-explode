@@ -43,7 +43,7 @@ export default class GameplayScene extends Phaser.Scene {
      */
     create(_data: any) {
         this.UI.createElements();
-        this.Mech.setLockedLetter("h", true);
+        //this.Mech.setLockedLetter("h", true);
         
     }
     update(_time: number, _delta: number): void {
