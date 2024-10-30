@@ -11,12 +11,9 @@ export class UserInput {
     constructor(keyboard: HTMLInputElement) {
         this.userInput = keyboard;
         this.currentWord = keyboard.value;
-        this.userInput.addEventListener('keydown', event => {
-            if (event.key === 'Enter') {
-                //console.log(this.userInput.value);
-                this.submitWord();
-            }
-        });
+
+        this.doEventListener()
+       
     }
     public setMechManager(_m:Mechanics){
         this.MechManager = _m
@@ -26,6 +23,14 @@ export class UserInput {
         this.MechManager?.submitWord(this.currentWord);
         this.userInput.value = '';
 
+    }
+    private doEventListener(){
+        this.userInput.addEventListener('keydown', event => {
+            this.currentWord = this.userInput.value
+            if (event.key === 'Enter') {
+                this.submitWord();
+            }
+        });
     }
     public setLockedLetter(key:Letter){
         this.userInput.addEventListener("keydown", (event) => {

@@ -40,10 +40,15 @@ export class Mechanics {
         }
     }
     public submitWord(_word:string){
+        console.log("in Mechanic subword");
+        console.log(_word)
         for(let item of this.paraManager.paragraph){
-                if (_word == item.word)
+                if (_word.toLowerCase().localeCompare(item.word.toLowerCase())){
                     item.isCompleted = true;
+                    return;
+                }
         }
+        this.UIManager.refreshParagraph();
     }
     public updateScore(score: number, points: number){
         score += points;
