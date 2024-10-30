@@ -50,9 +50,6 @@ class Paragraph {
             }
         }
     }
-    //  iterable<Paragraph>(pp: Iterable<Paragraph>): WordCheck[] {
-    //     return [...pp._words];
-    // }
 }
 
 type ParagraphSize = "SHORT" | "MEDIUM" | "LONG";
@@ -65,7 +62,7 @@ function isParagraphSize(word: string): word is ParagraphSize {
 @class ParagraphManager a class for handling the paragraphs and word contents to be used in the main prototype.
  **/
 export class ParagraphManager {
-    _paragraph: Paragraph;
+    private _paragraph: Paragraph;
 
     constructor(which_one: string) {
         let paragraphList = JSON.parse(JSON.stringify(jsonCopy));
@@ -87,5 +84,17 @@ export class ParagraphManager {
 
     public get paragraph() {
         return this._paragraph._words;
+    }
+
+    public getNumberOfWords() {
+        return this._paragraph._words.length;
+    }
+
+    public getLength() {
+        return this._paragraph._length;
+    }
+
+    public getLetterCount() {
+        return this._paragraph._letterCount;
     }
 }
