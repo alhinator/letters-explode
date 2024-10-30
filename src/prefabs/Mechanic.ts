@@ -44,7 +44,7 @@ export class Mechanics {
         _word = _word.replace(/[^a-zA-Z]/g, '');
         console.log(_word)
         for (let item of this.paraManager.paragraph) {
-            if (_word.toLowerCase().match(item.word.toLowerCase())) {
+            if (_word.toLowerCase().match(item.word.toLowerCase()) && !item.isCompleted) {
                 item.isCompleted = true;
                 this.UIManager.refreshParagraph();
                 return;
