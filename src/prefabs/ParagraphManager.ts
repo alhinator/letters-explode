@@ -32,7 +32,7 @@ class Paragraph {
         let wordList = paragraph.split(" ");
         wordList.forEach((word: string) => {
             // strips nonletter characters
-            word.replace(/[^a-zA-Z]/g, '');
+            word = word.replace(/[^a-zA-Z]/g, '');
             let newWordCheck: WordCheck = { word: word, isCompleted: false };
             this._words.push(newWordCheck);
         });
