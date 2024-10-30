@@ -19,33 +19,33 @@ interface LetterCheck<integer> {
 }
 
 class Paragraph {
-    paragraph: string;
-    words: WordCheck[];
-    length: integer;
-    letterCount: LetterCheck<integer>;
+    _paragraph: string;
+    _words: WordCheck[];
+    _length: integer;
+    _letterCount: LetterCheck<integer>;
 
     constructor(paragraph: string) {
-        this.paragraph = paragraph;
-        this.words = [];
+        this._paragraph = paragraph;
+        this._words = [];
 
         let wordList = paragraph.split(" ");
         wordList.forEach((word: string) => {
             let newWordCheck: WordCheck = { word: word, isCompleted: false };
-            this.words.push(newWordCheck);
+            this._words.push(newWordCheck);
         });
 
-        this.length = this.words.length;
+        this._length = this._words.length;
 
         // sets all letter appearances to 0
-        this.letterCount = {};
+        this._letterCount = {};
         for (const letter of letters) {
-            this.letterCount[letter] = 0;
+            this._letterCount[letter] = 0;
         }
 
-        for (const char of this.paragraph) {
+        for (const char of this._paragraph) {
             let c = char.toLowerCase();
             if (isLetter(c)) {
-                this.letterCount[c] += 1;
+                this._letterCount[c] += 1;
             }
         }
     }
@@ -61,14 +61,18 @@ function isParagraphSize(word: string): word is ParagraphSize {
 @class ParagraphManager a class for handling the paragraphs and word contents to be used in the main prototype.
  **/
 export class ParagraphManager {
-    paragraph: Paragraph;
+    _paragraph: Paragraph;
 
     constructor(which_one: string) {
         let paragraphList = JSON.parse("paragraphs.json");
         if (isParagraphSize(which_one)) {
-            this.paragraph = new Paragraph(paragraphList[which_one]);
+            this._paragraph = new Paragraph(paragraphList[which_one]);
         } else {
-            this.paragraph = new Paragraph("");
+            this._paragraph = new Paragraph("");
         }
+    }
+
+    public get paragraph() {
+        return this._paragraph;
     }
 }
