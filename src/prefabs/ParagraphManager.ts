@@ -9,7 +9,7 @@ function isLetter(char: string): char is Letter {
     return letters.indexOf(char) !== -1;
 }
 
-interface WordCheck {
+export interface WordCheck {
     word: string,
     isCompleted: boolean
 }
@@ -49,6 +49,9 @@ class Paragraph {
             }
         }
     }
+    //  iterable<Paragraph>(pp: Iterable<Paragraph>): WordCheck[] {
+    //     return [...pp._words];
+    // }
 }
 
 type ParagraphSize = "SHORT" | "MEDIUM" | "LONG";
@@ -72,7 +75,7 @@ export class ParagraphManager {
         }
     }
 
-    public get paragraph() {
-        return this._paragraph;
+    public getParagraph() {
+        return this._paragraph._words;
     }
 }

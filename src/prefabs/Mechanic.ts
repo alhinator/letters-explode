@@ -1,5 +1,6 @@
-import {ParagraphManager} from './ParagraphManager';
+import {ParagraphManager, WordCheck} from './ParagraphManager';
 import { Letter } from "./UIManager";
+
 
 /**
 @class Mechanics for handling user input interacting with marked letters and UI
@@ -41,11 +42,9 @@ export class Mechanics {
         }
     }
     public wordChecker(textParagraph : ParagraphManager){
-        for(let items of textParagraph.paragraph){
-            items.words.forEach((element) => {
-                if (this.userWord == element.word)
-                    element.isCompleted = true;
-            });
+        for(let item of textParagraph.getParagraph()){
+                if (this.userWord == item.word)
+                    item.isCompleted = true;
         }
     }
     public updateScore(score: number, points: number){
