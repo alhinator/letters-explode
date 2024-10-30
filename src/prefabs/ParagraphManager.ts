@@ -1,4 +1,5 @@
 import { Letter } from "./UIManager";
+import jsonCopy from "./paragraphs.json"
 const letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i",
     "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
     "t", "u", "v", "w", "x", "y", "z"
@@ -9,7 +10,7 @@ function isLetter(char: string): char is Letter {
     return letters.indexOf(char) !== -1;
 }
 
-interface WordCheck {
+export interface WordCheck {
     word: string,
     isCompleted: boolean
 }
@@ -19,33 +20,35 @@ interface LetterCheck<integer> {
 }
 
 class Paragraph {
-    paragraph: string;
-    words: WordCheck[];
-    length: integer;
-    letterCount: LetterCheck<integer>;
+    _paragraph: string;
+    _words: WordCheck[];
+    _length: integer;
+    _letterCount: LetterCheck<integer>;
 
     constructor(paragraph: string) {
-        this.paragraph = paragraph;
-        this.words = [];
+        this._paragraph = paragraph;
+        this._words = [];
 
         let wordList = paragraph.split(" ");
         wordList.forEach((word: string) => {
+            // strips nonletter characters
+            word.replace(/[^a-zA-Z]/g, '');
             let newWordCheck: WordCheck = { word: word, isCompleted: false };
-            this.words.push(newWordCheck);
+            this._words.push(newWordCheck);
         });
 
-        this.length = this.words.length;
+        this._length = this._words.length;
 
         // sets all letter appearances to 0
-        this.letterCount = {};
+        this._letterCount = {};
         for (const letter of letters) {
-            this.letterCount[letter] = 0;
+            this._letterCount[letter] = 0;
         }
 
-        for (const char of this.paragraph) {
+        for (const char of this._paragraph) {
             let c = char.toLowerCase();
             if (isLetter(c)) {
-                this.letterCount[c] += 1;
+                this._letterCount[c] += 1;
             }
         }
     }
@@ -53,14 +56,47 @@ class Paragraph {
 
 type ParagraphSize = "SHORT" | "MEDIUM" | "LONG";
 
+function isParagraphSize(word: string): word is ParagraphSize {
+    return ["SHORT", "MEDIUM", "LONG"].indexOf(word) !== -1;
+}
+
 /**
 @class ParagraphManager a class for handling the paragraphs and word contents to be used in the main prototype.
  **/
 export class ParagraphManager {
-    paragraph: Paragraph;
+    private _paragraph: Paragraph;
 
+    constructor(which_one: string) {
+        let paragraphList = JSON.parse(JSON.stringify(jsonCopy));
+        if (isParagraphSize(which_one)) {
+            switch (which_one) {
+                case "SHORT":
+                    this._paragraph = new Paragraph(paragraphList.copyList.SHORT);
+                    break;
+                case "MEDIUM":
+                    this._paragraph = new Paragraph(paragraphList.copyList.MEDIUM);
+                    break;
+                case "LONG":
+                    this._paragraph = new Paragraph(paragraphList.copyList.LONG);
+            }
+        } else {
+            this._paragraph = new Paragraph("");
+        }
+    }
 
-    constructor(which_one: ParagraphSize) {
-        this.paragraph = new Paragraph(""); // grabfromjson(which_one)
+    public get paragraph() {
+        return this._paragraph._words;
+    }
+
+    public getNumberOfWords() {
+        return this._paragraph._words.length;
+    }
+
+    public getLength() {
+        return this._paragraph._length;
+    }
+
+    public getLetterCount() {
+        return this._paragraph._letterCount;
     }
 }
