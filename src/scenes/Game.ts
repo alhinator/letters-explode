@@ -5,18 +5,21 @@
 
 import { UIManager } from "../prefabs/UIManager";
 import { Mechanics } from "../prefabs/Mechanic";
+import { ParagraphManager } from "../prefabs/ParagraphManager";
 
 export default class GameplayScene extends Phaser.Scene {
     UI: UIManager
     Mech: Mechanics
     eventTracker: EventTarget;
+    ParaManager: ParagraphManager;
     constructor() {
         super({ key: "game" });
 
 
         this.eventTracker = new EventTarget();
         const newWord = document.getElementById("userInput") as HTMLInputElement;
-        this.UI = new UIManager(this, this.eventTracker);
+        this.ParaManager = new ParagraphManager("MEDIUM");
+        this.UI = new UIManager(this, this.eventTracker, this.ParaManager);
         this.Mech = new Mechanics(newWord);
     }
     /**

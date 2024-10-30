@@ -1,5 +1,7 @@
 import BBCodeText from 'phaser3-rex-plugins/plugins/bbcodetext.js';
 import { MarkedLetter } from './MarkedLetter';
+import { ParagraphManager } from './ParagraphManager';
+//import { Mechanics } from './Mechanic';
 
 export const CURR_WORD_STYLE = {
     fontFamily: 'Avenir',
@@ -40,13 +42,14 @@ export class UIManager {
     private paragraphText: BBCodeText | undefined;
     private eventSystem: EventTarget;
 
-    //private paragraphObject:ParagraphObject
+    private paraManager:ParagraphManager;
+    private para
     private pairs: colorWordPair[];
     private marks: MarkedLetter[];
     timeTillExplode: number;
 
 
-    constructor(_scene: Phaser.Scene, _el: EventTarget /*, _p:ParagraphObject, _m:GameManager*/) {
+    constructor(_scene: Phaser.Scene, _el: EventTarget , _p:ParagraphManager) {
         console.log("in UIManager constructor")
         this.scene = _scene;
         this.sceneWidth = 0
@@ -56,12 +59,9 @@ export class UIManager {
         this.eventSystem.addEventListener("word-changed", this.updateCurrentWord);
 
         //TODO: implement colorwordpair: grab each word from paragraph and assign it an index and the default untyped color.
-        /*this.paragraphObject = _p
-        */
-        //this.pairs = [this.paragraphObject.numWords];
-        //TEMP CODE BELOW
+        this.paraManager = _p;
+        this.para = this.paraManager.paragraph;
         this.pairs = [];
-
         this.marks = [];
 
         //TODO: GAME MANAGER TIME TILL EXPLODE
@@ -95,10 +95,10 @@ export class UIManager {
 
     private initializeParagraphText() {
         if (!this.paragraphText) { throw ("UIManager: initializeParagraphText: paragraphText has not been created yet."); return }
-        //TODO : Paragraph object reciept & formatting
-        // this.paragraphObject.words.foreach((_daWord)=>{
-        //     pairs.append(new colorWordPair(color:#FFFFFF, word:_daWord))
-        // })
+        console.log("in initializeParagraph")
+        this.para.forEach((_daWord)=>{
+            this.pairs.push({color:"#FFFFFF", word:_daWord.word})
+        })
         let tmpString: string = "";
         this.pairs.forEach((pair) => {
             tmpString += ("[color=" + pair.color + "]" + pair.word + " ")

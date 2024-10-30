@@ -1,4 +1,5 @@
 import { Letter } from "./UIManager";
+import jsonCopy from "./paragraphs.json"
 const letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i",
     "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
     "t", "u", "v", "w", "x", "y", "z"
@@ -67,15 +68,24 @@ export class ParagraphManager {
     _paragraph: Paragraph;
 
     constructor(which_one: string) {
-        let paragraphList = JSON.parse("paragraphs.json");
+        let paragraphList = JSON.parse(JSON.stringify(jsonCopy));
         if (isParagraphSize(which_one)) {
-            this._paragraph = new Paragraph(paragraphList[which_one]);
+            switch (which_one) {
+                case "SHORT":
+                    this._paragraph = new Paragraph(paragraphList.copyList.SHORT);
+                    break;
+                case "MEDIUM":
+                    this._paragraph = new Paragraph(paragraphList.copyList.MEDIUM);
+                    break;
+                case "LONG":
+                    this._paragraph = new Paragraph(paragraphList.copyList.LONG);
+            }
         } else {
             this._paragraph = new Paragraph("");
         }
     }
 
-    public getParagraph() {
+    public get paragraph() {
         return this._paragraph._words;
     }
 }

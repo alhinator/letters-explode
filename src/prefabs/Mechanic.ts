@@ -1,4 +1,4 @@
-import {ParagraphManager, WordCheck} from './ParagraphManager';
+import {ParagraphManager} from './ParagraphManager';
 import { Letter } from "./UIManager";
 
 
@@ -42,7 +42,7 @@ export class Mechanics {
         }
     }
     public wordChecker(textParagraph : ParagraphManager){
-        for(let item of textParagraph.getParagraph()){
+        for(let item of textParagraph.paragraph){
                 if (this.userWord == item.word)
                     item.isCompleted = true;
         }
