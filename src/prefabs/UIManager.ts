@@ -115,6 +115,12 @@ export class UIManager {
         //console.log(this.paragraphText.active)
 
     }
+ 
+    public refreshParagraph(){ //called when a word is submitted
+        //this.pairs = [];
+        
+    }
+
     private initializeMarkedBoxes() {
         for (let i = 0; i < 3; i++) {
             let tmp = new MarkedLetter(this.scene, "nothing yet", this.timeTillExplode, this.sceneWidth/2 - 300 + i*300, this.sceneHeight/2 - 300);

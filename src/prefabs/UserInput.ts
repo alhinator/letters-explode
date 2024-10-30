@@ -1,28 +1,43 @@
-import {ParagraphManager} from './ParagraphManager';
 import { Mechanics } from './Mechanic';
-import { UIManager } from './UIManager';
+import { Letter } from './UIManager';
 
 
-export class UserInput{
+export class UserInput {
 
-    private manager: ParagraphManager;
+    private userInput: HTMLInputElement;
+    private currentWord: string;
+    private MechManager:Mechanics | undefined;
 
-    constructor(textParagrpah: ParagraphManager){
-        this.manager = textParagrpah;
+    constructor(keyboard: HTMLInputElement) {
+        this.userInput = keyboard;
+        this.currentWord = keyboard.value;
+        this.userInput.addEventListener('keydown', event => {
+            if (event.key === 'Enter') {
+                //console.log(this.userInput.value);
+                this.submitWord();
+            }
+        });
+    }
+    public setMechManager(_m:Mechanics){
+        this.MechManager = _m
     }
 
-    private takeWord(){
-        //prompt user to enter word
-        const newWord = document.getElementById("userInput") as HTMLInputElement;
-        return newWord;
+    private submitWord(){
+        this.MechManager?.submitWord(this.currentWord);
+        this.userInput.value = '';
+
+    }
+    public setLockedLetter(key:Letter){
+        this.userInput.addEventListener("keydown", (event) => {
+            if (event.key === key) {
+                    event.preventDefault();
+            }
+        });
+    }
+    public unlockLetter(key:Letter){
+        //TODO
     }
 
-    private checkWordValid(check_word: string){
-        //check if word is in paragraph/check if word is available (not exploded)
-        //depending on yes or no, play a small sound
-        for(let word in this.manager.paragraph){
-            if (word == check_word && word
-        }
-    }
+   
 
 }
