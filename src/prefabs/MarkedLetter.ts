@@ -10,7 +10,9 @@ export const MARKED_STYLE = {
     stroke: "#FFFFFF",
     strokeThickness: 0,
 }
-
+/**
+ * @class MarkedLetter a UI Element that displays a letter and countdown bar.
+ */
 export class MarkedLetter {
     letter: Letter
     timeRemaining: number
