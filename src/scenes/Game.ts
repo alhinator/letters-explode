@@ -4,16 +4,20 @@
  */
 
 import { UIManager } from "../prefabs/UIManager";
+import { Mechanics } from "../prefabs/Mechanic";
 
 export default class GameplayScene extends Phaser.Scene {
     UI: UIManager
+    Mech: Mechanics
     eventTracker: EventTarget;
     constructor() {
         super({ key: "game" });
 
-        this.eventTracker = new EventTarget();
 
+        this.eventTracker = new EventTarget();
+        const newWord = document.getElementById("userInput") as HTMLInputElement;
         this.UI = new UIManager(this, this.eventTracker);
+        this.Mech = new Mechanics(newWord);
     }
     /**
      * @init use this function to initialize any important things before preload() and create().
@@ -31,6 +35,7 @@ export default class GameplayScene extends Phaser.Scene {
      */
     create(_data: any) {
         this.UI.createElements();
+        this.Mech.resetUserInput();
         
     }
     update(_time: number, _delta: number): void {
