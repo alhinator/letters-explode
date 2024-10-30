@@ -82,6 +82,14 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+#userInput{
+  position: absolute;
+  width: 50%;
+  left: 25%;
+  bottom: 0;
+  font-size: 20px;
+  text-align: center;
+}
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -93,12 +101,5 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
-  }
-  #userInput{
-    position: absolute;
-    width: 50%;
-    left: 25%;
-    font-size: 16px;
-    text-align: center;
   }
 }

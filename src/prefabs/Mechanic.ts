@@ -48,8 +48,8 @@ export class Mechanics {
             });
         }
     }
-    public updateScore(event: Function, score: number, points: number){
-        score += points
+    public updateScore(score: number, points: number){
+        score += points;
     }
 
 }
