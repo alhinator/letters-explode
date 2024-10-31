@@ -8,6 +8,9 @@ import { UserInput } from './UserInput';
  **/
 const markInterval: number = 15;
 const maxGameTime: number = 100;
+const alphabet: ["a", "b", "c", "d", "e", "f", "g", "h", "i",
+    "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
+    "t", "u", "v", "w", "x", "y", "z"];
 
 export interface mark {
     pos: 0 | 1 | 2,
@@ -70,7 +73,8 @@ export class Mechanics {
         this.UIManager.tick(_delta);
         if (time > this.lastMark) {
             this.lastMark += markInterval;
-            //this.markForExplosion(/*random letter*/)
+            const randomLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
+            this.markForExplosion(randomLetter);
         }
         this.incTimer(_delta);
     }
