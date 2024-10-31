@@ -75,8 +75,7 @@ export class Mechanics {
         if (time > this.lastMark) {
             this.lastMark += markInterval;
             const randomLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
-            let newMark = this.markForExplosion(randomLetter);
-            this.marks.push(newMark);
+            this.markForExplosion(randomLetter);
         }
         for (let m of this.marks){
             if (m.countdown <= 0){
@@ -92,8 +91,8 @@ export class Mechanics {
         if(this.marks.length < 3){
             const position = this.marks.length - 1 as 0 | 1 | 2;
             let new_mark: mark ={pos: position, letter: key, countdown: this.paraManager.findLetterCount[key], cooldown: 10}
+            this.marks.push(new_mark);
             this.UIManager.markALetter(position, key) 
-            return new_mark;
         }
     }
 
