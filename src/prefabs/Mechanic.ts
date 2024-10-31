@@ -90,7 +90,7 @@ export class Mechanics {
     private markForExplosion(key: Letter) {
         if(this.marks.length < 3){
             const position = this.marks.length - 1 as 0 | 1 | 2;
-            let new_mark: mark ={pos: position, letter: key, countdown: this.paraManager.findLetterCount[key], cooldown: 10}
+            let new_mark: mark ={pos: position, letter: key, countdown: this.paraManager.findLetterCount(key), cooldown: 10}
             this.marks.push(new_mark);
             this.UIManager.markALetter(position, key) 
         }
