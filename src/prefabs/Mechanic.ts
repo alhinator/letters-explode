@@ -8,11 +8,13 @@ import { UserInput } from './UserInput';
  **/
 const markInterval: number = 15;
 const maxGameTime: number = 100;
+const listOfLetters: Letter[] = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
 export interface mark {
     pos: 0 | 1 | 2,
     letter: Letter
-    timeRemaining: number;
+    countdown: number;
+    cooldown: number;
 }
 
 export class Mechanics {
@@ -70,12 +72,25 @@ export class Mechanics {
         this.UIManager.tick(_delta);
         if (time > this.lastMark) {
             this.lastMark += markInterval;
-            //this.markForExplosion(/*random letter*/)
+            let rand_letter: Letter =  listOfLetters[Math.ceil(Math.random() * 25)];
+            let newMark = this.markForExplosion(rand_letter);
+            this.marks.push(newMark);
+        }
+        for (let m of this.marks){
+            if (m.countdown <= 0){
+                this.setLockedLetter(m.letter, true);
+            }
+            if (m.cooldown  <= 0){
+                this.setLockedLetter(m.letter, false);
+            }
         }
         this.incTimer(_delta);
     }
     private markForExplosion(key: Letter) {
-
+        //should return a new mark
+        //time remaining = time until explosion
+        let new_mark: mark ={pos: 0, letter: key, countdown: this.paraManager.findLetterCount[key], cooldown: 10} 
+        return new_mark;
     }
 
 }

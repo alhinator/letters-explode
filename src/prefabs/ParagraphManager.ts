@@ -99,4 +99,8 @@ export class ParagraphManager {
     public getLetterCount() {
         return this._paragraph._letterCount;
     }
+
+    public findLetterCount(key: Letter){
+        return this._paragraph._letterCount[key];
+    }
 }
