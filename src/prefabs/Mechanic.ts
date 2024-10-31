@@ -22,7 +22,7 @@ export class Mechanics {
     lastMark: number = 0;
     marks: mark[]
     gameTimer:number;
-
+    lockedList: Letter[];
 
     constructor(_pm: ParagraphManager, _ui: UIManager, _in: UserInput) {
         this.paraManager = _pm;
@@ -30,15 +30,21 @@ export class Mechanics {
         this.InputManager = _in;
         this.marks = []
         this.gameTimer = maxGameTime;
+        this.lockedList = [];
     }
 
 
     public setLockedLetter(key: Letter, status: boolean) {
         //If true, disable the letter for user input
         if (status) {
-            this.InputManager.setLockedLetter(key)
+            this.lockedList.push(key);
+            this.InputManager.setLockedLetter(this.lockedList);
         } else {
-            this.InputManager.unlockLetter(key)
+            for (let i = 0; i < this.lockedList.length; i++){
+                if (this.lockedList[i] == key){
+                    delete this.lockedList[i];
+                }
+            }
         }
     }
     public incTimer(_time: number) {
