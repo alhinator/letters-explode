@@ -88,7 +88,7 @@ export class Mechanics {
         this.incTimer(_delta);
     }
     private markForExplosion(key: Letter) {
-        if(!this.marks.some(mark => mark.letter == key)){
+        if(!this.marks.some(mark => mark.letter == key) && this.paraManager.findLetterCount(key) != 0){
             if(this.marks.length < 3){
                 const position = this.marks.length as 0 | 1 | 2;
                 const new_mark: mark ={pos: position, letter: key, countdown: this.paraManager.findLetterCount(key), cooldown: 10}
