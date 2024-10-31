@@ -46,7 +46,7 @@ export class Mechanics {
         } else {
             for (let i = 0; i < this.lockedList.length; i++){
                 if (this.lockedList[i] == key){
-                    delete this.lockedList[i];
+                    this.lockedList.splice(i);
                 }
             }
         }
@@ -88,14 +88,13 @@ export class Mechanics {
         this.incTimer(_delta);
     }
     private markForExplosion(key: Letter) {
-        if(this.marks.length < 3){
-            const position = this.marks.length as 0 | 1 | 2;
-            const new_mark: mark ={pos: position, letter: key, countdown: this.paraManager.findLetterCount(key), cooldown: 10}
-            this.marks.push(new_mark);
-            console.log(position);
-            this.UIManager.markALetter(position, key);
-            console.log(position);
+        if(!this.marks.some(mark => mark.letter == key)){
+            if(this.marks.length < 3){
+                const position = this.marks.length as 0 | 1 | 2;
+                const new_mark: mark ={pos: position, letter: key, countdown: this.paraManager.findLetterCount(key), cooldown: 10}
+                this.marks.push(new_mark);
+                this.UIManager.markALetter(position, key);
+            }
         }
     }
-
 }

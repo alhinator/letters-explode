@@ -29,7 +29,7 @@ export class UserInput {
     }
     public setLockedLetter(list: Letter[]){
         this.userInput.addEventListener("keydown", (event) => {
-            if (event.key in list) {
+            if (list.includes(event.key as Letter)) {
                     event.preventDefault();
             }
         });
