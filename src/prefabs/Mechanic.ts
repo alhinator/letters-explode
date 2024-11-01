@@ -55,11 +55,17 @@ export class Mechanics {
     public submitWord(_word: string) {
         //console.log("in Mechanic subword");
         _word = _word.replace(/[^a-zA-Z]/g, '');
-        for (let item of this.paraManager.paragraph) {
-            if (_word.toLowerCase() === item.word.toLowerCase() && !item.isCompleted) {
-                item.isCompleted = true;
+        const currentWord = this.paragraphWord(this.paraManager)
+            if (_word.toLowerCase() === currentWord?.word.toLowerCase()) {
+                currentWord.isCompleted = true;
                 this.UIManager.refreshParagraph();
                 return;
+            }
+    }
+    private paragraphWord(textParagraph: ParagraphManager){
+        for (let item of textParagraph.paragraph) {
+            if (!item.isCompleted) {
+                return item;
             }
         }
     }
