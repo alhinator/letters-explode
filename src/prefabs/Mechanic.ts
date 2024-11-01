@@ -28,6 +28,8 @@ export class Mechanics {
     marks: mark[]
     gameTimer:number;
     lockedList: Letter[];
+    sound: HTMLAudioElement;
+    sound1: HTMLAudioElement;
 
     constructor(_pm: ParagraphManager, _ui: UIManager, _in: UserInput) {
         this.paraManager = _pm;
@@ -36,6 +38,8 @@ export class Mechanics {
         this.marks = []
         this.gameTimer = maxGameTime;
         this.lockedList = [];
+        this.sound = document.getElementById('boom') as HTMLAudioElement;
+        this.sound1 = document.getElementById('submit') as HTMLAudioElement;
     }
 
 
@@ -58,6 +62,7 @@ export class Mechanics {
         const currentWord = this.paragraphWord(this.paraManager)
             if (_word.toLowerCase() === currentWord?.word.toLowerCase()) {
                 currentWord.isCompleted = true;
+                this.sound1.play();
                 this.UIManager.refreshParagraph();
                 return;
             }
@@ -84,6 +89,7 @@ export class Mechanics {
             //Disable letter key if countdown goes to 0
             if (m.countdown <= 0 && m.cooldown == 0){
                 this.setLockedLetter(m.letter, true);
+                this.sound.play();
                 m.cooldown = 15; //Start cooldown
             }
             if (m.cooldown  > 0){
@@ -96,7 +102,6 @@ export class Mechanics {
             }
             m.countdown -= _delta;
         }
-        console.log(this.gameTimer);
     }
     private markForExplosion(key: Letter) {
         if(!this.marks.some(mark => mark.letter == key) && this.paraManager.findLetterCount(key) != 0){

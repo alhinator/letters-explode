@@ -13,7 +13,7 @@ export default class GameplayScene extends Phaser.Scene {
     Mech: Mechanics
     eventTracker: EventTarget;
     ParaManager: ParagraphManager;
-    InputManager:UserInput
+    InputManager:UserInput;
     constructor() {
         super({ key: "game" });
 
@@ -22,7 +22,6 @@ export default class GameplayScene extends Phaser.Scene {
         const inputEle = document.getElementById("userInput") as HTMLInputElement;
         this.ParaManager = new ParagraphManager("MEDIUM");
         this.UI = new UIManager(this, this.eventTracker, this.ParaManager);
-
         this.InputManager = new UserInput(inputEle);
         this.Mech = new Mechanics(this.ParaManager, this.UI, this.InputManager);
         this.InputManager.setMechManager(this.Mech);
