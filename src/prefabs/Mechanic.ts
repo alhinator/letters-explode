@@ -78,13 +78,22 @@ export class Mechanics {
             const randomLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
             this.markForExplosion(randomLetter);
         }
-        for (let m of this.marks){
-            if (m.countdown <= 0){
+        for (const m of this.marks){
+            //Disable letter key if countdown goes to 0
+            if (m.countdown <= 0 && m.cooldown == 0){
                 this.setLockedLetter(m.letter, true);
+                m.cooldown = 15; //Start cooldown
             }
-            if (m.cooldown  <= 0){
-                this.setLockedLetter(m.letter, false);
+            if (m.cooldown  > 0){
+                //If cooldown goes to 0, clear marks list to create new marked letters
+                m.cooldown -= _delta;
+                if (m.cooldown <= 0){
+                    this.setLockedLetter(m.letter, false);
+                    m.countdown = this.paraManager.findLetterCount(m.letter);
+                    this.marks = [];
+                }
             }
+            m.countdown -= _delta;
         }
         this.incTimer(_delta);
     }
@@ -99,7 +108,7 @@ export class Mechanics {
                     countdown = Math.max(3, 15);
                 }
                 const position = this.marks.length as 0 | 1 | 2;
-                const new_mark: mark ={pos: position, letter: key, countdown, cooldown: 10}
+                const new_mark: mark ={pos: position, letter: key, countdown, cooldown: 0}
                 this.marks.push(new_mark);
                 this.UIManager.markALetter(position, key, countdown);
             }
