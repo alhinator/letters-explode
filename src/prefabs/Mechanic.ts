@@ -89,13 +89,13 @@ export class Mechanics {
                 m.cooldown -= _delta;
                 if (m.cooldown <= 0){
                     this.setLockedLetter(m.letter, false);
-                    m.countdown = this.paraManager.findLetterCount(m.letter);
                     this.marks = [];
                 }
             }
             m.countdown -= _delta;
         }
         this.incTimer(_delta);
+        console.log(this.gameTimer);
     }
     private markForExplosion(key: Letter) {
         if(!this.marks.some(mark => mark.letter == key) && this.paraManager.findLetterCount(key) != 0){
