@@ -101,7 +101,7 @@ export class Mechanics {
                 const position = this.marks.length as 0 | 1 | 2;
                 const new_mark: mark ={pos: position, letter: key, countdown, cooldown: 10}
                 this.marks.push(new_mark);
-                this.UIManager.markALetter(position, key, this.paraManager.findLetterCount(key));
+                this.UIManager.markALetter(position, key, countdown);
             }
         }
     }
