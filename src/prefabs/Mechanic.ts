@@ -78,15 +78,14 @@ export class Mechanics {
             //Disable letter key if countdown goes to 0
             if (m.countdown <= 0 && m.cooldown == 0){
                 this.setLockedLetter(m.letter, true);
-                m.cooldown = 5; //Start cooldown
+                m.cooldown = 15; //Start cooldown
             }
             if (m.cooldown  > 0){
                 //If cooldown goes to 0, clear marks list to create new marked letters
                 m.cooldown -= _delta;
                 if (m.cooldown <= 0){
                     this.setLockedLetter(m.letter, false);
-                    this.marks.splice(m.pos);
-                    console.log(this.marks);
+                    this.marks = [];
                 }
             }
             m.countdown -= _delta;
