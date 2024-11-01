@@ -129,8 +129,8 @@ export class UIManager {
     public defuse(_position: 0 | 1 | 2) {
         this.marks[_position].defuse();
     }
-    public markALetter(_position: 0 | 1 | 2, _letter: Letter) {
-        this.marks[_position].resetEverything(_letter);
+    public markALetter(_position: 0 | 1 | 2, _letter: Letter, countdown: number) {
+        this.marks[_position].resetEverything(_letter, countdown);
     }
     public lockALetter(_position: 0 | 1 | 2) {
         this.marks[_position].showLocked()

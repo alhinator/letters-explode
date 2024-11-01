@@ -1,3 +1,4 @@
+//import { MarkedLetter } from './MarkedLetter';
 import { ParagraphManager } from './ParagraphManager';
 import { Letter, UIManager } from "./UIManager";
 import { UserInput } from './UserInput';
@@ -90,10 +91,17 @@ export class Mechanics {
     private markForExplosion(key: Letter) {
         if(!this.marks.some(mark => mark.letter == key) && this.paraManager.findLetterCount(key) != 0){
             if(this.marks.length < 3){
+                let countdown = this.paraManager.findLetterCount(key);
+                if (countdown < Math.min(3, 15)){
+                    countdown = Math.min(3, 15);
+                }
+                else if (countdown > Math.max(3, 15)){
+                    countdown = Math.max(3, 15);
+                }
                 const position = this.marks.length as 0 | 1 | 2;
-                const new_mark: mark ={pos: position, letter: key, countdown: this.paraManager.findLetterCount(key), cooldown: 10}
+                const new_mark: mark ={pos: position, letter: key, countdown, cooldown: 10}
                 this.marks.push(new_mark);
-                this.UIManager.markALetter(position, key);
+                this.UIManager.markALetter(position, key, this.paraManager.findLetterCount(key));
             }
         }
     }

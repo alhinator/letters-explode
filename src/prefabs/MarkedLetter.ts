@@ -32,9 +32,9 @@ export class MarkedLetter {
         this.defused = true;
     }
 
-    public resetEverything(_letter: Letter,) {
+    public resetEverything(_letter: Letter, countdown: number) {
         this.letter = _letter
-        this.timeRemaining = this.maxTime;
+        this.timeRemaining = countdown;
         this.markedText.text = "[color=white]" + this.letter + "[/color]";
         this.timerBar.width = 100;
         this.defused = false;
