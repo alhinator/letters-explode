@@ -52,13 +52,9 @@ export class Mechanics {
             }
         }
     }
-    public incTimer(_time: number) {
-        this.gameTimer -= _time;
-    }
     public submitWord(_word: string) {
         //console.log("in Mechanic subword");
         _word = _word.replace(/[^a-zA-Z]/g, '');
-        //console.log(_word)
         for (let item of this.paraManager.paragraph) {
             if (_word.toLowerCase() === item.word.toLowerCase() && !item.isCompleted) {
                 item.isCompleted = true;
@@ -78,7 +74,7 @@ export class Mechanics {
             const randomLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
             this.markForExplosion(randomLetter);
         }
-        for (const m of this.marks){
+        for (let m of this.marks){
             //Disable letter key if countdown goes to 0
             if (m.countdown <= 0 && m.cooldown == 0){
                 this.setLockedLetter(m.letter, true);
@@ -94,8 +90,6 @@ export class Mechanics {
             }
             m.countdown -= _delta;
         }
-        this.incTimer(_delta);
-        console.log(this.gameTimer);
     }
     private markForExplosion(key: Letter) {
         if(!this.marks.some(mark => mark.letter == key) && this.paraManager.findLetterCount(key) != 0){

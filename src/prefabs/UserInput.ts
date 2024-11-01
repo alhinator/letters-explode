@@ -5,12 +5,10 @@ import { Letter } from './UIManager';
 export class UserInput {
 
     private userInput: HTMLInputElement;
-    private currentWord: string;
     private MechManager:Mechanics | undefined;
 
     constructor(keyboard: HTMLInputElement) {
         this.userInput = keyboard;
-        this.currentWord = keyboard.value;
         this.userInput.addEventListener('keydown', event => {
             if (event.key === 'Enter') {
                 //console.log(this.userInput.value);
@@ -23,7 +21,7 @@ export class UserInput {
     }
 
     private submitWord(){
-        this.MechManager?.submitWord(this.currentWord);
+        this.MechManager?.submitWord(this.userInput.value);
         this.userInput.value = '';
 
     }
