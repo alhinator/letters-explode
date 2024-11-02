@@ -103,7 +103,7 @@ export class UIManager {
         if (!this.paragraphText) { throw ("UIManager: initializeParagraphText: paragraphText has not been created yet."); return }
         this.pairs = []
         this.para.forEach((_daWord) => {
-            let _c = _daWord.isCompleted ? "#00FFFF" : "#FFFFFF"
+            let _c = _daWord.isCompleted ? "#00FF00" : "#FFFFFF"
             this.pairs.push({ color: _c, word: _daWord.word })
         })
         let tmpString: string = "";
