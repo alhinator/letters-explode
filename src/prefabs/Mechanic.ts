@@ -115,11 +115,11 @@ export class Mechanics {
 
     private markForExplosion(key: Letter, position: 0 | 1 | 2): mark {
         let countdown = this.paraManager.findLetterCount(key);
-        if (countdown < Math.min(3, 15)){
-            countdown = Math.min(3, 15);
+        if (countdown < Math.min(3, 8)){
+            countdown = Math.min(3, 8);
         }
-        else if (countdown > Math.max(3, 15)){
-            countdown = Math.max(3, 15);
+        else if (countdown > Math.max(3, 8)){
+            countdown = Math.max(3, 8);
         }
         const new_mark: mark ={pos: position, letter: key, countdown, cooldown: 0}
         this.UIManager.markALetter(position, key, countdown);
