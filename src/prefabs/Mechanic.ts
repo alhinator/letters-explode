@@ -74,44 +74,55 @@ export class Mechanics {
 
     public tick(time: number, _delta: number) { //does game loop 
         this.UIManager.tick(_delta);
+        const newLetter = this.randomLetter();
         if (time > this.lastMark) {
-            this.lastMark += markInterval;
-            const randomLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
-            this.markForExplosion(randomLetter);
+            if(this.marks.length < 3){
+                this.lastMark += markInterval;
+                const newMark = this.markForExplosion(newLetter, this.marks.length as 0 | 1 | 2);
+                this.marks.push(newMark);
+            }
         }
-        for (let m of this.marks){
+        this.marks.forEach((m) => {
             //Disable letter key if countdown goes to 0
             if (m.countdown <= 0 && m.cooldown == 0){
                 this.setLockedLetter(m.letter, true);
                 this.sound.play();
-                m.cooldown = 15; //Start cooldown
+                m.cooldown = Math.floor(Math.random() * 15 + 1); //Start random cooldown
+                //console.log(m.cooldown);
             }
             if (m.cooldown  > 0){
-                //If cooldown goes to 0, clear marks list to create new marked letters
+                //If cooldown goes to 0, replace the marked letter in the list
                 m.cooldown -= _delta;
                 if (m.cooldown <= 0){
                     this.setLockedLetter(m.letter, false);
-                    this.marks = [];
+                    const replaceMark = this.markForExplosion(newLetter, m.pos);
+                    this.marks.splice(m.pos, 1, replaceMark);
+                    //const marks = this.marks.map(item => item.letter);
+                    //console.log(marks);
                 }
             }
             m.countdown -= _delta;
-        }
+        });
     }
-    private markForExplosion(key: Letter) {
-        if(!this.marks.some(mark => mark.letter == key) && this.paraManager.findLetterCount(key) != 0){
-            if(this.marks.length < 3){
-                let countdown = this.paraManager.findLetterCount(key);
-                if (countdown < Math.min(3, 15)){
-                    countdown = Math.min(3, 15);
-                }
-                else if (countdown > Math.max(3, 15)){
-                    countdown = Math.max(3, 15);
-                }
-                const position = this.marks.length as 0 | 1 | 2;
-                const new_mark: mark ={pos: position, letter: key, countdown, cooldown: 0}
-                this.marks.push(new_mark);
-                this.UIManager.markALetter(position, key, countdown);
-            }
+    private randomLetter (): Letter{
+        //Checks if a random letter appears in the paragraph
+        let _letter = alphabet[Math.floor(Math.random() * alphabet.length)]
+        do {
+            _letter = alphabet[Math.floor(Math.random() * alphabet.length)];
+        } while (this.paraManager.findLetterCount(_letter) == 0 || this.marks.some(mark => mark.letter == _letter))
+        return _letter;
+    }
+
+    private markForExplosion(key: Letter, position: 0 | 1 | 2): mark {
+        let countdown = this.paraManager.findLetterCount(key);
+        if (countdown < Math.min(3, 15)){
+            countdown = Math.min(3, 15);
         }
+        else if (countdown > Math.max(3, 15)){
+            countdown = Math.max(3, 15);
+        }
+        const new_mark: mark ={pos: position, letter: key, countdown, cooldown: 0}
+        this.UIManager.markALetter(position, key, countdown);
+        return new_mark;
     }
 }
